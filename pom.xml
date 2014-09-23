@@ -22,7 +22,11 @@
 		    <version>7.0</version>
 		    <scope>provided</scope>
 		</dependency>
-		
+		<dependency>
+  <groupId>com.google.api-client</groupId>
+  <artifactId>google-api-client</artifactId>
+  <version>1.18.0-rc</version>
+</dependency>
 		<dependency>
 		    <groupId>javax</groupId>
 		    <artifactId>javaee-web-api</artifactId>
