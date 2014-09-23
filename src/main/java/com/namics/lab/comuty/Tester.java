@@ -1,10 +1,22 @@
 package com.namics.lab.comuty;
 
-public class Tester {
+import java.io.IOException;
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+@WebServlet("/test")
+public class Tester extends HttpServlet{
+
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		resp.getWriter().println("test servlet");
 	}
+
+	
 
 }
