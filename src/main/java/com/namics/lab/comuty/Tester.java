@@ -1,18 +1,22 @@
 package com.namics.lab.comuty;
 
-import java.util.Date;
+import java.io.IOException;
 
-import com.namics.lab.comuty.bs.services.GoogleDirectionsReader;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-public class Tester {
+@WebServlet("/test")
+public class Tester extends HttpServlet{
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		
-		GoogleDirectionsReader gr = new GoogleDirectionsReader("Saint Gallen", "Zurich", GoogleDirectionsReader.DRIVING_MODE);
-		Date now = new Date();
-		now.setHours(now.getHours()+2);
-		gr.getDirectionsArrivalTime(now.getTime());
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		resp.getWriter().println("test servlet");
 	}
+
+	
 
 }

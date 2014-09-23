@@ -5,6 +5,9 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.ServletContextListener;
+import javax.servlet.annotation.WebListener;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -234,5 +237,4 @@ public class GoogleDirectionsReader {
 
 		return route;
 	}
-
 }
