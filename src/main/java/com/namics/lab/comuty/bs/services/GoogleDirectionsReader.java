@@ -3,6 +3,7 @@ package com.namics.lab.comuty.bs.services;
 import java.io.*;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletContextListener;
@@ -20,6 +21,18 @@ import com.google.gson.stream.JsonToken;
 import com.namics.lab.comuty.bs.services.data.Route;
 
 public class GoogleDirectionsReader {
+	
+	public static void main (String[] args0) {
+		GoogleDirectionsReader reader = new GoogleDirectionsReader("Teufenerstrasse 19, Saint Gallen","Enge, Zürich", GoogleDirectionsReader.TRANSIT_MODE);
+		Date date = new Date();
+		date.setHours(date.getHours()+6);
+		Route route = reader.getDirectionsDepartureTime(date.getTime()/1000);
+		
+		if (route != null)
+				System.out.println("SUCESS: " + route.getDuration());
+		else
+			System.out.println("There was an error");
+	}
 
 	private final static String baseURL = "http://maps.googleapis.com/maps/api/directions/json?";
 	public final static String DRIVING_MODE = "driving";
@@ -29,6 +42,7 @@ public class GoogleDirectionsReader {
 	private String origin = "";
 	private String destination = "";
 	private String mode = "";
+	private Route route = null;
 
 	public GoogleDirectionsReader(String origin, String destination, String mode) {
 		super();
@@ -61,23 +75,26 @@ public class GoogleDirectionsReader {
 		this.mode = mode;
 	}
 
-	public void getDirectionsDepartureTime(long departure_time) {
+	public Route getDirectionsDepartureTime(long departure_time) {
 		String request = buildRequestURL("departure_time", departure_time);
 
 		this.executeRequest(request);
 
+		return route;
 	}
 
-	public void getDirectionsArrivalTime(long arrival_time) {
+	public Route getDirectionsArrivalTime(long arrival_time) {
 		String request = buildRequestURL("arrival_time", arrival_time);
 
 		this.executeRequest(request);
+		
+		return route;
 	}
 
 	private String buildRequestURL(String time_key, long time) {
 		String request = "";
 		try {
-			request += baseURL + "&" + "origin="
+			request += baseURL + "origin="
 					+ URLEncoder.encode(origin, "UTF-8") + "&" + "destination="
 					+ URLEncoder.encode(destination, "UTF-8") + "&" + "mode="
 					+ mode + "&" + time_key + "=" + time;
@@ -171,6 +188,11 @@ public class GoogleDirectionsReader {
 				reader.skipValue();
 			}
 		}
+		
+		if (routes.size()>0) {
+			route = routes.get(0);			
+		}
+
 	}
 
 	private List<Route> readRoutesArray(JsonReader reader) throws IOException {
